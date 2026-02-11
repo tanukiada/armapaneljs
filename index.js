@@ -23,10 +23,6 @@ app.get('/api/v1/service/status', (req, res) => {
     });
 });
 
-app.put('/api/v1/service/start', (req, res) => {
-    
-})
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
