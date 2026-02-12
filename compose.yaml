@@ -25,6 +25,12 @@ services:
     env_file: .env
     restart: unless-stopped
 
+  a3fixer:
+    image: alpine
+    volumes:
+      - a3_server:/arma3/server
+    command: sh -c "chmod u+x /arma3/server/arma3server_x64"
+
   cldcmder:
     image: coderaiser/cloudcmd
     platform: linux/amd64

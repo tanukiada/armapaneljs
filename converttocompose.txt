@@ -1,1 +1,0 @@
-docker run --rm -v armapanel_a3_server:/arma3/server/ alpine sh -c "chmod u+x /arma3/server/arma3server_x64"
