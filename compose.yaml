@@ -1,27 +1,27 @@
 services:
-    
   db:
     image: postgres
     restart: always
     shm_size: 128mb
     environment:
-      POSTGRES_PASSWORD: toast123
+      POSTGRES_PASSWORD: ${DB_PASS}
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/home/ada/data
 
   arma3:
+    user: "0:0"
     build: .
     image: ghcr.io/brettmayson/arma3server/arma3server:v2
     platform: linux/amd64
     container_name: arma3
     network_mode: host
     volumes:
-      - './configs:/arma3/server/configs'
-      - './mods:/arma3/server/mods'
-      - './servermods:/arma3/server/servermods'
-      - './server:/arma3/server/'
+      - a3_configs:/arma3/server/configs
+      - a3_mods:/arma3/server/mods
+      - a3_servermods:/arma3/server/servermods
+      - a3_server:/arma3/server/
     env_file: .env
     restart: unless-stopped
 
@@ -37,3 +37,7 @@ volumes:
   jets:
   orange:
   steamcmd:
+  a3_configs:
+  a3_mods:
+  a3_servermods:
+  a3_server:
