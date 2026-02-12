@@ -1,0 +1,34 @@
+arma3:
+    user: "0:0"
+    build: .
+    image: ghcr.io/brettmayson/arma3server/arma3server:v2
+    platform: linux/amd64
+    container_name: arma3
+    network_mode: host
+    volumes:
+      - a3_configs:/arma3/server/configs
+      - a3_mods:/arma3/server/mods
+      - a3_servermods:/arma3/server/servermods
+      - a3_server:/arma3/server/
+    env_file: .env
+    restart: unless-stopped
+    
+  a3fixer:
+    image: alpine
+    volumes:
+      - a3_server:/arma3/server
+    command: sh -c "chmod u+x /arma3/server/arma3server_x64"
+
+  volumes:
+    addons:
+    argo:
+    enoch:
+    expansion:
+    heli:
+    jets:
+    orange:
+    steamcmd:
+    a3_configs:
+    a3_mods:
+    a3_servermods:
+    a3_server:
