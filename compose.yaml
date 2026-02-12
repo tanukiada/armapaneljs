@@ -25,6 +25,20 @@ services:
     env_file: .env
     restart: unless-stopped
 
+  cldcmder:
+    image: coderaiser/cloudcmd
+    platform: linux/amd64
+    container_name: cldcmder
+    ports:
+      - "8000:8000"
+    volumes:
+      - a3_server:/mnt/server_files
+    command: "cloudcmd --one-file-panel --root=/mnt/server_files --auth"
+    environment:
+      CLOUDCMD_USERNAME: admin
+      CLOUDCMD_PASSWORD: ${CMD_PASS}
+    restart: unless-stopped
+
 volumes:
   # postgres
   pgdata:

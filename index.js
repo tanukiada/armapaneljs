@@ -48,6 +48,10 @@ app.get('/api/v1/service/status', (req, res) => {
     });
 });
 
+app.get('/api/v1/service/configs', async (req, res) => {
+    configs = await container.GetArchive('/arma3/server/configs');
+});
+
 app.put('/api/v1/service/status', async (req, res) => {
     const { status } = req.body;
 
