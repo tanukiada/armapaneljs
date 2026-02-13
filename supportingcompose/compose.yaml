@@ -17,7 +17,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - a3_server:/mnt/server_files
+      - a3compose_a3_server:/mnt/server_files
     command: "cloudcmd --one-file-panel --root=/mnt/server_files --auth"
     environment:
       CLOUDCMD_USERNAME: admin
@@ -28,4 +28,5 @@ volumes:
   # postgres
   pgdata:
   # arma 3
-  a3_server:
+  a3compose_a3_server:
+    external: true

@@ -20,16 +20,16 @@ services:
       - a3_server:/arma3/server
     command: sh -c "chmod u+x /arma3/server/arma3server_x64"
 
-  volumes:
-    addons:
-    argo:
-    enoch:
-    expansion:
-    heli:
-    jets:
-    orange:
-    steamcmd:
-    a3_configs:
-    a3_mods:
-    a3_servermods:
-    a3_server:
+volumes:
+  addons:
+  argo:
+  enoch:
+  expansion:
+  heli:
+  jets:
+  orange:
+  steamcmd:
+  a3_configs:
+  a3_mods:
+  a3_servermods:
+  a3_server:
