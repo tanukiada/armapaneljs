@@ -11,8 +11,8 @@ services:
       - a3_mods:/arma3/server/mods
       - a3_servermods:/arma3/server/servermods
       - a3_server:/arma3/server/
-    env_file: .env
-    restart: unless-stopped
+    env_file:
+      - .env
 
   a3fixer:
     image: alpine

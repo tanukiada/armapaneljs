@@ -4,6 +4,7 @@ const argon2 = require('argon2');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
@@ -67,10 +68,10 @@ async function setContainerStatus(containerName, desiredStatus) {
         const isRunning = data.State.Running;
 
         if (desiredStatus === 'Online') {
-            if(isRunning) await container.start();
+            if(!isRunning) await container.start();
             return { success: true, message: `Container ${containerName} is running.` };
         } else if (desiredStatus === 'Offline') {
-            if (!isRunning) await container.stop();
+            if (isRunning) await container.stop();
             return { success: true, message: `Container ${containerName} is stopped.` };
         } else {
             return { success: false, message: `Invalid status: ${desiredStatus}. Use "Online" or "Offline".` };
@@ -156,7 +157,7 @@ app.post('/api/v1/auth/login', async (req, res) => {
         { expiresIn: '1h' }
     );
 
-    res.json({ token });
+    res.json({ token: token });
 });
 
 app.listen(port, () => {
