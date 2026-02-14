@@ -1,13 +1,9 @@
-
-
 async function checkAuthorized() {
-    console.log("Hello, World");
     try {
         let response = await fetch('https://tanuki.gay/api/v1/auth/verifyToken', {
         credentials: 'include'
         })
         let data = response.json();
-        console.log(data.status);
         if (data.status === 401) {
             window.location.href = '/frontend/login/login.html'
         }
@@ -15,6 +11,10 @@ async function checkAuthorized() {
         console.error('Error fetching token: ', err.message);
     }
 }
+
+addEventListener("load", (event) => {
+    checkAuthorized();
+});
 
 async function getStatus() {
     try {
