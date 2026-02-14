@@ -164,6 +164,8 @@ app.post('/v1/auth/login', async (req, res) => {
     res.json({ token: token });
 });
 
+app.use('/login', express.static(path.join(__dirname, 'frontend/login')));
+
 app.use('/frontend', authenticateToken, (req, res, next) => {
     next();
 });
