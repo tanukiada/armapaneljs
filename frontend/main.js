@@ -27,7 +27,7 @@ async function changeState(status) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ Status: status })
+        body: JSON.stringify({ status: status })
         })
         if (!response.ok) {
             console.error('Failed to get response. Please report to your local ada.');
