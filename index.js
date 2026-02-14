@@ -125,7 +125,16 @@ app.post('/v1/auth/register', async(req, res) => {
     return res.status(201).json({ message: "Account created"});
 });
 
-app.get('/v1/auth/verifyToken', authenticateToken);
+app.get('/v1/auth/verifyToken', async (req, res, next) => {
+    const authToken = req.cookies.token;
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+});
 
 app.post('/v1/auth/login', async (req, res) => {
     const client = new Client(config);
