@@ -139,7 +139,7 @@ app.post('/v1/auth/login', async (req, res) => {
     };
     const password = req.body.password;
 
-    results = await client.query(query);
+    const results = await client.query(query);
 
     if (results.rows.length === 0) {
         await client.end();
