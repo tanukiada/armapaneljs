@@ -164,7 +164,7 @@ app.post('/v1/auth/login', async (req, res) => {
     res.json({ token: token });
 });
 
-app.use('/frontend', authenticateToken, (req, res) => {
+app.use('/frontend', authenticateToken, (req, res, next) => {
     next();
 });
 
