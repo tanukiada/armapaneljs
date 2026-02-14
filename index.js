@@ -84,10 +84,6 @@ async function setContainerStatus(containerName, desiredStatus) {
     }
 }
 
-app.get('/frontend', (req, res) => {
-    res.redirect('/frontend/login.html');
-});
-
 app.get('/v1/service/status', authenticateToken, (req, res) => {
     GameDig.query({
         type: 'arma3',
@@ -167,13 +163,17 @@ app.post('/v1/auth/login', async (req, res) => {
     res.json({ token: token });
 });
 
-app.use('/login', express.static(path.join(__dirname, 'frontend/login')));
+app.use('/frontend/login', express.static(path.join(__dirname, 'frontend/public')));
 
-app.use('/frontend', authenticateToken, (req, res, next) => {
-    next();
+// app.use('/app', authenticateToken, (req, res, next) => {
+//     next();
+// });
+
+app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
+
+app.get('/frontend/app', (req, res) => {
+    res.redirect('/frontend/login.html');
 });
-
-app.use('/frontend', express.static(path.join(__dirname, './frontend/')));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
