@@ -47,7 +47,7 @@ function changeState(status) {
 function login(event) {
     const form = document.querySelector('#login_form');
     event.preventDefault();
-    const formData = new FormData(form.target);
+    const formData = new FormData(form);
     const dataObject = Object.fromEntries(FormData.entries());
     const jsonString = JSON.stringify(dataObject);
     fetch('https://tanuki.gay/api/v1/service/status', {
