@@ -18,10 +18,7 @@ services:
       - "8000:8000"
     volumes:
       - a3compose_a3_server:/mnt/server_files
-    command: "cloudcmd --one-file-panel --root=/mnt/server_files --auth"
-    environment:
-      CLOUDCMD_USERNAME: admin
-      CLOUDCMD_PASSWORD: ${CMD_PASS}
+    command: "cloudcmd --prefix /files --one-file-panel --root=/mnt/server_files --auth --username admin --password ${CMD_PASS}"
     restart: unless-stopped
 
 volumes:

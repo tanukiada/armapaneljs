@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <a href="http://localhost:8000">Go to file browser</a>
+        <a href="https://tanuki.gay/files/">Go to file browser</a>
     </nav>
     <main>
         <router-view />

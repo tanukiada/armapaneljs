@@ -5,9 +5,10 @@ import login from "./login.vue"
 
 const routes = [
     {
-        path: '/index',
+        path: '/',
         name: 'index',
-        component: index
+        component: index,
+	meta: { requiresAuth: true }
     },
     {
         path: '/login',
@@ -24,7 +25,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token')
 
-    if (to.name === 'Home' && !token) {
+    if (to.meta.requiresAuth && !token) {
         next('/login')
     } else {
         next()

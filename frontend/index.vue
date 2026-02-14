@@ -18,7 +18,7 @@ let intervalId = null
 async function fetchData() {
     const token = localStorage.getItem('token')
     try {
-        const response = await fetch('/api/v1/service/status', {
+        const response = await fetch('https://tanuki.gay/api/v1/service/status', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -42,7 +42,7 @@ async function fetchData() {
 async function changeServerState(newStatus) {
     const token = localStorage.getItem('token')
     try {
-        const response = await fetch('/api/v1/service/status', {
+        const response = await fetch('https://tanuki.gay/api/v1/service/status', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,7 +52,10 @@ async function changeServerState(newStatus) {
                 status: newStatus
             })
         })
-
+	if (response.status === 401) {
+		localStorage.removeItem("token")
+		window.location.href = "/login"
+	}
         if (!response.ok) {
             if (response.status === 503) {
                 sdata.value.status = 'offline'
@@ -72,7 +75,6 @@ async function changeServerState(newStatus) {
 
 onMounted(() => {
     fetchData()
-
     intervalId  = setInterval(() => {
         fetchData()
     }, 5000)

@@ -1,4 +1,5 @@
 const { GameDig } = require('gamedig');
+const path = require('path');
 const Docker = require('dockerode');
 const argon2 = require('argon2');
 const express = require('express');
@@ -9,6 +10,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, './frontend/dist')));
 
 let docker = new Docker({socketPath: '/var/run/docker.sock'});
 
@@ -81,7 +84,8 @@ async function setContainerStatus(containerName, desiredStatus) {
     }
 }
 
-app.get('/api/v1/service/status', authenticateToken, (req, res) => {
+
+app.get('/v1/service/status', authenticateToken, (req, res) => {
     GameDig.query({
         type: 'arma3',
         host: '127.0.0.1',
@@ -93,7 +97,7 @@ app.get('/api/v1/service/status', authenticateToken, (req, res) => {
     });
 });
 
-app.put('/api/v1/service/status', authenticateToken, async (req, res) => {
+app.put('/v1/service/status', authenticateToken, async (req, res) => {
     const { status } = req.body;
 
     if (!status) {
@@ -108,7 +112,7 @@ app.put('/api/v1/service/status', authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/api/v1/auth/register', async(req, res) => {
+app.post('/v1/auth/register', async(req, res) => {
     const client = new Client(config);
     await client.connect();
     const username = req.body.username;
@@ -121,7 +125,7 @@ app.post('/api/v1/auth/register', async(req, res) => {
     return res.status(201).json({ message: "Account created"});
 })
 
-app.post('/api/v1/auth/login', async (req, res) => {
+app.post('/v1/auth/login', async (req, res) => {
     const client = new Client(config);
     await client.connect();
     const username = req.body.username;
@@ -158,6 +162,10 @@ app.post('/api/v1/auth/login', async (req, res) => {
     );
 
     res.json({ token: token });
+});
+
+app.use(authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/dist', 'index.html'));
 });
 
 app.listen(port, () => {

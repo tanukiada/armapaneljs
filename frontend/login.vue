@@ -5,6 +5,7 @@
         <br>
         <label for="password">Password</label>
         <input v-model="password" type="password" required/>
+	<br>
         <button type="submit">Submit</button>
         <br>
         <p v-if="error" style="color:red;">{{  error  }}</p>
@@ -24,7 +25,7 @@ const router = useRouter()
 async function login() {
     error.value = ''
     try {
-        const response = await fetch('/api/v1/auth/login', {
+        const response = await fetch('https://tanuki.gay/api/v1/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -42,7 +43,7 @@ async function login() {
 
         localStorage.setItem('token', data.token)
 
-        router.push('/index')
+        router.push('/')
     } catch (err) {
         error.value = err.message
     }
