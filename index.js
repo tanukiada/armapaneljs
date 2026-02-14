@@ -84,6 +84,9 @@ async function setContainerStatus(containerName, desiredStatus) {
     }
 }
 
+app.get('/frontend', (req, res) => {
+    res.redirect('/frontend/login.html');
+});
 
 app.get('/v1/service/status', authenticateToken, (req, res) => {
     GameDig.query({
