@@ -36,7 +36,7 @@ function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (!token) return res.sendStatus(401);
+    if (!token) return res.sendStatus(401).redirect('/frontend/login');
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
@@ -172,10 +172,6 @@ app.post('/v1/auth/login', async (req, res) => {
 });
 
 app.use('/frontend/login', express.static(path.join(__dirname, 'frontend/public')));
-
-// app.use('/app', authenticateToken, (req, res, next) => {
-//     next();
-// });
 
 app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
 app.use(express.static(__dirname));
