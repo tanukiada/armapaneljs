@@ -1,7 +1,9 @@
 const jwt = localStorage.getItem('token');
 
-if(!jwt) {
-        window.location.href = 'frontend/login/login.html';
+function checkAuthorized() {
+    if(!jwt) {
+            window.location.href = 'frontend/login/login.html';
+    }
 }
 
 async function getStatus() {
@@ -10,18 +12,18 @@ async function getStatus() {
             credentials: 'include'
         })
         let data = response.json();
-        if (data.Status !== 'Online') {
+        while (data.Status !== 'Online') {
             setTimeout(getStatus, 5000);
             document.querySelector('#data-container').innerHTML = "Server Status: Offline";
-        } else {
-            document.querySelector('#data-container').innerHTML = "Server Status: Online";
         }
+        document.querySelector('#data-container').innerHTML = "Server Status: Online";
     } catch (err) {
         console.error('Error fetching data: ', err.message);
     }
 }
 
 async function changeState(status) {
+    getStatus();
     try{
         const response = await fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
