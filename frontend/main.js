@@ -1,7 +1,7 @@
 const jwt = localStorage.getItem('token');
 
-async function getStatus() {
-    let response = await fetch('https://tanuki.gay/api/v1/service/status', {
+function getStatus() {
+    let response = fetch('https://tanuki.gay/api/v1/service/status', {
         headers: {
             "Authorization": "Bearer " + jwt
         }
@@ -19,8 +19,8 @@ async function getStatus() {
         .catch(error => console.error('Error fetching data:', error));
 }
 
-async function changeState(status) {
-    let = response = await fetch('https://tanuki.gay/api/v1/service/status', {
+function changeState(status) {
+    let = response = fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -44,13 +44,13 @@ async function changeState(status) {
         });
 }
 
-async function login() {
+function login(event) {
     const form = document.querySelector('#login_form');
-    form.preventDefault();
+    event.preventDefault();
     const formData = new formData(form.target);
-    const dataObject = Object.fromEntries(formData.entries());
-    const jsonString = json.stringify(dataObject);
-    await fetch('https://tanuki.gay/api/v1/service/status', {
+    const dataObject = Object.fromEntries(FormData.entries());
+    const jsonString = JSON.stringify(dataObject);
+    fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -64,6 +64,6 @@ async function login() {
         })
         .then(response => response.json())
         .then(data => localStorage.setItem('token', data.token))
-        .then(window.location.href = "../app/index.html")
+        .then(() => {window.location.href = "../app/index.html"})
         .catch((error) => console.error('Error: ', error));
 }
