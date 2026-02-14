@@ -1,6 +1,7 @@
 
 
 async function checkAuthorized() {
+    console.log("Hello, World");
     try {
         let response = await fetch('https://tanuki.gay/api/v1/auth/verifyToken', {
         credentials: 'include'
