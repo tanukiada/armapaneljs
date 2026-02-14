@@ -5,7 +5,7 @@ if(!jwt) {
 }
 
 function getStatus() {
-    let response = fetch('https://tanuki.gay/api/v1/service/status', {
+    fetch('https://tanuki.gay/api/v1/service/status', {
         credentials: 'include'
     })
         .then(response => {
@@ -16,13 +16,16 @@ function getStatus() {
             return response.json()
         })
         .then(data => {
+            if (data.status !== 'Online') {
+                setTimeout(getStatus, 5000);
+            }
             document.querySelector("#data-container").append( data.status );
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error fetching data: ', error));
 }
 
 function changeState(status) {
-    let = response = fetch('https://tanuki.gay/api/v1/service/status', {
+    fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
         credentials: 'include',
         headers: {
