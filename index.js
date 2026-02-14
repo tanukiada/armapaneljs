@@ -126,8 +126,8 @@ app.post('/v1/auth/register', async(req, res) => {
 });
 
 app.get('/v1/auth/verifyToken', async (req, res, next) => {
-    const authToken = req.cookies.token;
-    if (!token) return res.sendStatus(401).redirect('/frontend/login');
+    const token = req.cookies.token;
+    if (!token) return res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
