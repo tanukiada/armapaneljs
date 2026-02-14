@@ -169,11 +169,11 @@ app.use('/frontend/login', express.static(path.join(__dirname, 'frontend/public'
 //     next();
 // });
 
-app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
-
 app.get('/frontend/app', (req, res) => {
-    res.redirect('/frontend/public/login.html');
+    res.redirect('/frontend/login');
 });
+
+app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
