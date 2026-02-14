@@ -61,6 +61,7 @@ function login(event) {
             if(!response.ok) {
                 document.querySelector('#errorHandler').innerHTML = "Contact your local server tanuki with the following info: " + response.status;
             }
+            return response;
         })
         .then(response => response.json())
         .then(data => localStorage.setItem('token', data.token))
