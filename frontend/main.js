@@ -6,13 +6,10 @@ if(!jwt) {
 
 function getStatus() {
     let response = fetch('https://tanuki.gay/api/v1/service/status', {
-        headers: {
-            "Authorization": "Bearer " + jwt
-        }
+        credentials: 'include'
     })
         .then(response => {
             if (response.status === 401) {
-                localStorage.removeItem('token');
                 window.location.href = 'login.html';
                 return;
             }
@@ -27,9 +24,9 @@ function getStatus() {
 function changeState(status) {
     let = response = fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
+        credentials: 'include',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + jwt
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({status: status})
     })
@@ -62,7 +59,8 @@ function login(event) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: jsonString
+        body: jsonString,
+        credentials: 'include'
         })
         .then(response => {
             if(!response.ok) {
@@ -71,7 +69,6 @@ function login(event) {
             }
             return response.json();
         })
-        .then(data => localStorage.setItem('token', data.token))
         .then(() => {window.location.href = "../app/index.html"})
         .catch((error) => console.error('Error: ', error));
 }

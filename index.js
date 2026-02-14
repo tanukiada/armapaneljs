@@ -4,6 +4,7 @@ const Docker = require('dockerode');
 const argon2 = require('argon2');
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
@@ -128,11 +129,6 @@ app.post('/v1/auth/login', async (req, res) => {
     const client = new Client(config);
     await client.connect();
     const username = req.body.username;
-    // const hash = await argon2.hash(req.body.password);
-    // const query = {
-    //     text: 'INSERT INTO users (username, password) values ($1, $2)',
-    //     values: [username, hash],
-    // };
     const query = {
         text: 'SELECT * FROM users WHERE username = $1',
         values: [username],
@@ -165,7 +161,14 @@ app.post('/v1/auth/login', async (req, res) => {
         { expiresIn: '1h' }
     );
 
-    res.json({ token: token });
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600000,
+        sameSite: 'Strict'
+    });
+
+    res.status(200).json({ message: "Login successful" });
 });
 
 app.use('/frontend/login', express.static(path.join(__dirname, 'frontend/public')));
