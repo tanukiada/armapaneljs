@@ -164,9 +164,11 @@ app.post('/v1/auth/login', async (req, res) => {
     res.json({ token: token });
 });
 
-app.use(authenticateToken, (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/dist', 'index.html'));
+app.use('/frontend', authenticateToken, (req, res) => {
+    next();
 });
+
+app.use('/frontend', express.static(path.join(__dirname, './frontend/', 'index.html')));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
