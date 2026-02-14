@@ -174,6 +174,7 @@ app.get('/frontend/app', (req, res) => {
 });
 
 app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
+app.use(express.static(__dirname));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
