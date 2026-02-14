@@ -139,12 +139,12 @@ app.post('/v1/auth/login', async (req, res) => {
     };
     const password = req.body.password;
 
+    results = await client.query(query);
+
     if (results.rows.length === 0) {
         await client.end();
         return res.status(400).json({message: "Invalid Credentials"});
     }
-
-    results = await client.query(query);
 
     const rows = results.rows;
     const row = rows[0];
