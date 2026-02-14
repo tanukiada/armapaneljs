@@ -2,7 +2,7 @@
 
 async function checkAuthorized() {
     try {
-        let response = await fetch('http://tanuki.gay/api/v1/auth/verifyToken', {
+        let response = await fetch('https://tanuki.gay/api/v1/auth/verifyToken', {
         credentials: 'include'
         })
         let data = response.json();
