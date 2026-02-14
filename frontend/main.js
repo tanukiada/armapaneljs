@@ -10,7 +10,7 @@ async function getStatus() {
             credentials: 'include'
         })
         let data = response.json();
-        if (data.status !== 'Online') {
+        if (data.Status !== 'Online') {
             setTimeout(getStatus, 5000);
         }
         document.querySelector('#data-container').innerHTML = "Server Status: " + data.Status;
