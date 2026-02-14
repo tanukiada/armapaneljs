@@ -50,7 +50,7 @@ function login(event) {
     const formData = new FormData(form);
     const dataObject = Object.fromEntries(formData.entries());
     const jsonString = JSON.stringify(dataObject);
-    fetch('https://tanuki.gay/api/v1/service/status', {
+    fetch('https://tanuki.gay/api/v1/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
