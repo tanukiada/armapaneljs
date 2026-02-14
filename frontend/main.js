@@ -6,6 +6,7 @@ async function checkAuthorized() {
         credentials: 'include'
         })
         let data = response.json();
+        console.log(data.status);
         if (data.status === 401) {
             window.location.href = '/frontend/login/login.html'
         }
