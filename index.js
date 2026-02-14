@@ -123,7 +123,9 @@ app.post('/v1/auth/register', async(req, res) => {
     };
     results = await client.query(query);
     return res.status(201).json({ message: "Account created"});
-})
+});
+
+app.get('v1/auth/verifyToken', authenticateToken);
 
 app.post('/v1/auth/login', async (req, res) => {
     const client = new Client(config);

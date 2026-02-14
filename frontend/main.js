@@ -1,8 +1,16 @@
-const jwt = localStorage.getItem('token');
 
-function checkAuthorized() {
-    if(!jwt) {
-        window.location.href = 'frontend/public/login.html';
+
+async function checkAuthorized() {
+    try {
+        let response = await fetch('http://tanuki.gay/api/v1/auth/verifyToken', {
+        credentials: 'include'
+        })
+        let data = response.json();
+        if (data.status === 401) {
+            window.location.href = '/frontend/login/login.html'
+        }
+    } catch (err) {
+        console.error('Error fetching token: ', err.message);
     }
 }
 
