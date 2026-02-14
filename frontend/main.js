@@ -1,5 +1,9 @@
 const jwt = localStorage.getItem('token');
 
+if(!jwt) {
+        window.location.href = 'frontend/login/login.html';
+}
+
 function getStatus() {
     let response = fetch('https://tanuki.gay/api/v1/service/status', {
         headers: {
