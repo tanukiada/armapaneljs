@@ -50,7 +50,7 @@ async function login() {
     const formData = new formData(form.target);
     const dataObject = Object.fromEntries(formData.entries());
     const jsonString = json.stringify(dataObject);
-    let response = await fetch('https://tanuki.gay/api/v1/service/status', {
+    await fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
