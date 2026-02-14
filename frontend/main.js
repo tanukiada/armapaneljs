@@ -2,7 +2,7 @@ const jwt = localStorage.getItem('token');
 
 function checkAuthorized() {
     if(!jwt) {
-            window.location.href = 'frontend/login/login.html';
+        window.location.href = 'frontend/public/login.html';
     }
 }
 
