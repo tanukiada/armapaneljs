@@ -36,7 +36,6 @@ async function changeState(status) {
     } catch (err) {
         console.error('Fetch Error: ', err.message);
     }
-    getStatus();
 }
 
 async function login(event) {
