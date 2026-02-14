@@ -137,7 +137,12 @@ app.post('/v1/auth/login', async (req, res) => {
         text: 'SELECT * FROM users WHERE username = $1',
         values: [username],
     };
-    const password = req.body.password; 
+    const password = req.body.password;
+
+    if (results.rows.length === 0) {
+        await client.end();
+        return res.status(400).json({message: "Invalid Credentials"});
+    }
 
     results = await client.query(query);
 
