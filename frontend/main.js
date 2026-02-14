@@ -20,7 +20,6 @@ async function getStatus() {
 }
 
 async function changeState(status) {
-    getStatus();
     try{
         const response = await fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
@@ -37,6 +36,7 @@ async function changeState(status) {
     } catch (err) {
         console.error('Fetch Error: ', err.message);
     }
+    getStatus();
 }
 
 async function login(event) {
