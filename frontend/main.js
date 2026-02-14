@@ -10,9 +10,10 @@ function getStatus() {
             if (response.status === 401) {
                 localStorage.removeItem('token');
                 window.location.href = 'login.html';
+                return;
             }
+            return response.json()
         })
-        .then(response => response.json())
         .then(data => {
             document.querySelector("#data-container").append( data.status );
         })
@@ -23,9 +24,10 @@ function changeState(status) {
     let = response = fetch('https://tanuki.gay/api/v1/service/status', {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
         },
-        body: JSON.stringify(status)
+        body: JSON.stringify({status: status})
     })
         .then(response => {
             if (response.status === 401) {
