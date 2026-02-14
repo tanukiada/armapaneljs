@@ -13,7 +13,7 @@ async function getStatus() {
         if (data.status !== 'Online') {
             setTimeout(getStatus, 5000);
         }
-        document.querySelector('#data-container').innerHTML("Server Status: " + data.status );
+        document.querySelector('#data-container').innerHTML = "Server Status: " + data.status;
     } catch (err) {
         console.error('Error fetching data: ', err.message);
     }
