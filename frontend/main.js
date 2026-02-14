@@ -6,7 +6,7 @@ if(!jwt) {
 
 async function getStatus() {
     try {
-        let reponse = await fetch('https://tanuki.gay/api/v1/service/status', {
+        let response = await fetch('https://tanuki.gay/api/v1/service/status', {
             credentials: 'include'
         })
         let data = response.json();
@@ -39,31 +39,6 @@ async function changeState(status) {
     }
 }
 
-function login(event) {
-    const form = document.querySelector('#login_form');
-    event.preventDefault();
-    const formData = new FormData(form);
-    const dataObject = Object.fromEntries(formData.entries());
-    const jsonString = JSON.stringify(dataObject);
-    fetch('https://tanuki.gay/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: jsonString,
-        credentials: 'include'
-        })
-        .then(response => {
-            if(!response.ok) {
-                document.querySelector('#errorHandler').innerHTML = "Contact your local server tanuki with the following info: " + response.status;
-                throw new Error("Login failed");
-            }
-            return response.json();
-        })
-        .then(() => {window.location.href = "../app/index.html"})
-        .catch((error) => console.error('Error: ', error));
-}
-
 async function login(event) {
     const form = document.querySelector('#login_form');
     event.preventDefault();
@@ -84,6 +59,6 @@ async function login(event) {
         }
         window.location.href = "../app/index.html";
     } catch (err) {
-        console.error("Could not log you in: ", error);
+        console.error("Could not log you in: ", err.message);
     }
 }
