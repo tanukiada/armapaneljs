@@ -60,10 +60,10 @@ function login(event) {
         .then(response => {
             if(!response.ok) {
                 document.querySelector('#errorHandler').innerHTML = "Contact your local server tanuki with the following info: " + response.status;
+                throw new Error("Login failed");
             }
-            return response;
+            return response.json();
         })
-        .then(response => response.json())
         .then(data => localStorage.setItem('token', data.token))
         .then(() => {window.location.href = "../app/index.html"})
         .catch((error) => console.error('Error: ', error));
