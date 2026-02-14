@@ -59,5 +59,6 @@ async function login() {
         })
         .then(response => response.json())
         .then(data => localStorage.setItem('token', data.token))
+        .then(window.location.href = "../app/index.html")
         .catch((error) => console.error('Error: ', error));
 }
