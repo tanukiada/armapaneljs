@@ -13,7 +13,7 @@ async function getStatus() {
         if (data.status !== 'Online') {
             setTimeout(getStatus, 5000);
         }
-        document.querySelector('#data-container').innerHTML = "Server Status: " + data.status;
+        document.querySelector('#data-container').innerHTML = "Server Status: " + data.Status;
     } catch (err) {
         console.error('Error fetching data: ', err.message);
     }
@@ -28,7 +28,7 @@ async function changeState(status) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ status: status })
+        body: JSON.stringify({ Status: status })
         })
         if (!response.ok) {
             console.error('Failed to get response. Please report to your local ada.');
