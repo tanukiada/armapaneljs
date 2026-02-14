@@ -57,6 +57,11 @@ async function login() {
         },
         body: jsonString
         })
+        .then(response => {
+            if(!response.ok) {
+                document.querySelector('#errorHandler').innerHTML = "Contact your local server tanuki with the following info: " + response.status;
+            }
+        })
         .then(response => response.json())
         .then(data => localStorage.setItem('token', data.token))
         .then(window.location.href = "../app/index.html")
