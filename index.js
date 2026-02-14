@@ -173,6 +173,10 @@ app.get('/frontend/app', (req, res) => {
     res.redirect('/frontend/login/login.html');
 });
 
+app.get('/frontend/login', (req, res) => {
+    res.redirect('/frontend/app/index.html');
+});
+
 app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
 app.use(express.static(__dirname));
 
