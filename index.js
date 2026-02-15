@@ -182,10 +182,9 @@ app.post('/v1/auth/login', async (req, res) => {
     res.status(200).json({ message: "Login successful" });
 });
 
-app.use('/frontend/login', express.static(path.join(__dirname, 'frontend/public')));
-
-app.use('/frontend/app', authenticateToken, express.static(path.join(__dirname, './frontend/app')));
-app.use(express.static(__dirname));
+app.use(authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/dist', 'index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
