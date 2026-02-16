@@ -22,7 +22,7 @@ const router = createRouter({
     routes
 })
 
-async function authorized() {
+const authorized = async () {
     const response = await fetch('https://tanuki.gay/api/v1/auth/user', {
         method: 'GET',
         credentials: 'include'
@@ -36,7 +36,9 @@ async function authorized() {
 }
 
 router.beforeEach(async (to, from) => {
-    if (to.meta.requiresAuth && !authorized()) {
+    if (to.meta.requiresAuth && !authorized) {
+        return { name: 'login' }
+    } else if (to.meta.requiresAuth && to.name !== 'login') {
         return { name: 'login' }
     }
 })
