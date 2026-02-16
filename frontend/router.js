@@ -36,12 +36,8 @@ const authorized = async() => {
 }
 
 router.beforeEach(async (to, from) => {
-    if (to.meta.requiresAuth && !authorized) {
+    if (!authorized && to.name !== 'login') {
         return { name: 'login' }
-    } else if (to.meta.requiresAuth && to.name !== 'login') {
-        return { name: 'login' }
-    } else {
-        return { name: 'index' }
     }
 })
 
