@@ -204,7 +204,7 @@ app.get('/{*splat}', authenticateToken, (req, res) => {
 //     res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
 // });
 
-app.get(authenticateToken, (req, res) => {
+app.use(authenticateToken, (req, res) => {
     res.sendFile(path.join(__dirname, './frontend/dist'))
 });
 
