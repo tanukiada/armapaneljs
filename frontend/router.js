@@ -22,23 +22,9 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(async (to, from, next) => {
-    if (to.meta.requiresAuth) {
-        return next();
-    }
-
-    try {
-        const res = await fetch('/v1/auth/user', {
-            credentials: 'include'
-        });
-
-        if (res.ok) {
-            next();
-        } else {
-            next('/login');
-        }
-    } catch {
-        next('/login');
+router.beforeEach(async (to, from) => {
+    if (to.meta.requiresAuth && to.name !== 'login') {
+        return { name: 'login' }
     }
 });
 
