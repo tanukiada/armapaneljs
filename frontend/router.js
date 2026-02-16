@@ -28,7 +28,11 @@ async function authorized() {
         credentials: 'include'
     })
     const data = response.json()
-    console.log(data)
+    if (data.user) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 router.beforeEach(async (to, from) => {
