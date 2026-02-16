@@ -1,10 +1,10 @@
 <template>
     <form @submit.prevent="login">
         <label for="username">Username</label>
-        <input v-model="username" required/>
+        <input v-model="username" id="username" name="username" required/>
         <br>
         <label for="password">Password</label>
-        <input v-model="password" type="password" required/>
+        <input v-model="password" id="password" name="password" type="password" required/>
 	<br>
         <button type="submit">Submit</button>
         <br>
