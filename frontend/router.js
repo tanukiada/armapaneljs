@@ -33,7 +33,6 @@ async function authorized() {
 
 router.beforeEach(async (to, from) => {
     if (to.meta.requiresAuth && !authorized()) {
-        console.log(authorized())
         return { name: 'login' }
     }
 })
