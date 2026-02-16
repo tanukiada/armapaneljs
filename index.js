@@ -188,21 +188,21 @@ app.post('/v1/auth/login', async (req, res) => {
     res.status(200).json({ message: "Login successful" });
 });
 
-app.get('/', authenticateToken, (req, res) => {
+app.get('/*', authenticateToken, (req, res) => {
     res.sendFile(path.join(__dirname, './frontend/dist/index.html'));
 });
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
-    if (token) {
-        try {
-            jwt.verify(token, process.env.JWT_SECRET);
-            return res.redirect("/");
-        } catch {}
-    }
+// app.get('/login', (req, res) => {
+//     res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
+//     if (token) {
+//         try {
+//             jwt.verify(token, process.env.JWT_SECRET);
+//             return res.redirect("/");
+//         } catch {}
+//     }
     
-    res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
-});
+//     res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
+// });
 
 app.get(authenticateToken, res.sendFile(path.join(__dirname, './frontend/dist')));
 
