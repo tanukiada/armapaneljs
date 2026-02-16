@@ -22,7 +22,7 @@ const error = ref('')
 
 const router = useRouter()
 
-async function login() {
+const login = async() => {
     error.value = ''
     try {
         const response = await fetch('https://tanuki.gay/api/v1/auth/login', {
