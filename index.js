@@ -43,7 +43,7 @@ function authenticateToken(req, res, next) {
         req.user = decoded;
         next();
     } catch (err) {
-        return res.status(401).json({ message: "invalid token" });
+        return res.status(401).json({ message: 'invalid token' });
     }
 }
 
