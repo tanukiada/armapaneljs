@@ -36,13 +36,15 @@ const config = {
 function authenticateToken(req, res, next) {
     const token = req.cookies.token;
 
-    if (!token) return res.sendStatus(401).redirect('/frontend/login');
+    if (!token) return res.redirect('/frontend/login');
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
+    try { 
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
         next();
-    });
+    } catch (err) {
+        return res.redirect("/login")
+    }
 }
 
 async function createTablesIfNotExists() {
@@ -125,15 +127,19 @@ app.post('/v1/auth/register', async(req, res) => {
     return res.status(201).json({ message: "Account created"});
 });
 
-app.get('/v1/auth/verifyToken', async (req, res, next) => {
+app.get('/v1/auth/user', async(req, res) => {
     const token = req.cookies.token;
-    if (!token) return res.sendStatus(401);
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
+    if (!token) {
+        return res.status(401).json({ message: 'unauthorized' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ user: decoded });
+    } catch (err) {
+        res.status(401).json({ message: 'invalid token' });
+    }
 });
 
 app.post('/v1/auth/login', async (req, res) => {
@@ -167,7 +173,7 @@ app.post('/v1/auth/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-        { uname: username },
+        { username: username },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );
@@ -182,9 +188,23 @@ app.post('/v1/auth/login', async (req, res) => {
     res.status(200).json({ message: "Login successful" });
 });
 
-app.use(authenticateToken, (req, res) => {
-    res.sendFile(path.join(__dirname, './frontend/dist', 'index.html'));
+app.get('/', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/dist/index.html'));
 });
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
+    if (token) {
+        try {
+            jwt.verify(token, process.env.JWT_SECRET);
+            return res.redirect("/");
+        } catch {}
+    }
+    
+    res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
+});
+
+app.get(authenticateToken, res.sendFile(path.join(__dirname, './frontend/dist')));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

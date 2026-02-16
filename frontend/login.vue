@@ -41,8 +41,6 @@ async function login() {
             throw new Error(data.message || 'Login failed')
         }
 
-        localStorage.setItem('token', data.token)
-
         router.push('/')
     } catch (err) {
         error.value = err.message

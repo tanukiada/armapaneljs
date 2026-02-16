@@ -15,14 +15,21 @@ const route = useRoute();
 const sdata = ref({ status: 'unknown'})
 let intervalId = null
 
+async function verifyUser() {
+    const response = await fetch('https://tanuki.gay/api/v1/auth/user', {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    const data = await response.json();
+}
+
 async function fetchData() {
-    const token = localStorage.getItem('token')
     try {
         const response = await fetch('https://tanuki.gay/api/v1/service/status', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+            method: 'GET',
+            credentials: 'include'
+        });
         if (!response.ok) {
             if (response.status === 503) {
                 sdata.value.status = "offline"
@@ -40,20 +47,18 @@ async function fetchData() {
 }
 
 async function changeServerState(newStatus) {
-    const token = localStorage.getItem('token')
     try {
         const response = await fetch('https://tanuki.gay/api/v1/service/status', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 status: newStatus
-            })
+            }),
+            credentials: 'include'
         })
 	if (response.status === 401) {
-		localStorage.removeItem("token")
 		window.location.href = "/login"
 	}
         if (!response.ok) {

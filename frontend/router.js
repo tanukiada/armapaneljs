@@ -8,7 +8,7 @@ const routes = [
         path: '/',
         name: 'index',
         component: index,
-	meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
     {
         path: '/login',
@@ -22,14 +22,24 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem('token')
-
-    if (to.meta.requiresAuth && !token) {
-        next('/login')
-    } else {
-        next()
+router.beforeEach(async (to, from, next) => {
+    if (to.meta.requiresAuth) {
+        return next();
     }
-})
+
+    try {
+        const res = await fetch('/v1/auth/user', {
+            credentials: 'include'
+        });
+
+        if (res.ok) {
+            next();
+        } else {
+            next('/login');
+        }
+    } catch {
+        next('/login');
+    }
+});
 
 export default router
