@@ -22,7 +22,7 @@ const router = createRouter({
     routes
 })
 
-const authorized = async () {
+const authorized = async() => {
     const response = await fetch('https://tanuki.gay/api/v1/auth/user', {
         method: 'GET',
         credentials: 'include'
