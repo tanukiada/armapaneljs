@@ -204,7 +204,9 @@ app.get('/{*splat}', authenticateToken, (req, res) => {
 //     res.sendFile(path.join(__dirname, './frontend/dist', 'login.html'));
 // });
 
-app.get(authenticateToken, res.sendFile(path.join(__dirname, './frontend/dist')));
+app.get(authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, './frontend/dist'))
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
