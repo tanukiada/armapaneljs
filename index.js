@@ -188,7 +188,7 @@ app.post('/v1/auth/login', async (req, res) => {
     res.status(200).json({ message: "Login successful" });
 });
 
-app.get('/*', authenticateToken, (req, res) => {
+app.get('/{*splat}', authenticateToken, (req, res) => {
     res.sendFile(path.join(__dirname, './frontend/dist/index.html'));
 });
 
